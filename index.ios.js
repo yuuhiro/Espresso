@@ -11,43 +11,78 @@ import {
   Text,
   View
 } from 'react-native';
+import { Router, Scene } from 'react-native-router-flux';
+
+import PageOne from './components/PageOne';
+import PageTwo from './components/PageTwo';
+import TabView from './components/TabView';
+import TabIcon from './components/TabIcon';
+import SwipeView from './components/SwipeView';
+import FlexView from './components/FlexView';
+import NavigationDrawer from './components/NavigationDrawer';
 
 export default class Espresso extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+		<Router>
+			<Scene key="root" title="root" sceneStyle={{ color: 'red' }}>
+				<Scene key="tabbar">
+					<Scene
+						key="main"
+						tabs
+						navigationBarStyle={{ backgroundColor: 'red' }}
+						tabBarStyle={styles.tabBarStyle}
+						tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}
+					>
+						<Scene
+							key="tab1"
+							title="build"
+							icon={TabIcon}
+							titleStyle={{ color: 'white' }}
+						>
+							<Scene key="FlexView"
+								   component={FlexView}
+								   title="PageOne"
+								   renderRightButton={() => <Text>Right</Text>}
+							/>
+							<Scene key="pageOne"
+								   component={PageOne}
+								   title="PageOne"
+								   renderRightButton={() => <Text>Right</Text>}
+							/>
+							<Scene key="pageTwo"
+								   component={PageTwo}
+								   title="PageTwo"
+							/>
+						</Scene>
+						<Scene key="tab2" title="book" icon={TabIcon}>
+							<Scene
+								key="tab2_1"
+								component={SwipeView}
+								title="Tab #2_1"
+							/>
+						</Scene>
+						<Scene key="tab3" component={TabView} title="cached" icon={TabIcon} />
+						<Scene key="tab4" component={TabView} title="accessibility" icon={TabIcon} />
+						<Scene key="tab5" component={TabView} title="android" icon={TabIcon} />
+					</Scene>
+				</Scene>
+			</Scene>
+		</Router>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+	container: { flex: 1, backgroundColor: 'transparent', justifyContent: 'center',
+		alignItems: 'center',
+	},
+	tabBarStyle: {
+		backgroundColor: '#eee',
+	},
+	tabBarSelectedItemStyle: {
+		backgroundColor: '#ddd',
+	},
 });
 
 AppRegistry.registerComponent('Espresso', () => Espresso);
